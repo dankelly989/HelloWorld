@@ -2,79 +2,118 @@
 
 <script>
     function allowDrop(ev) {
-        if (ev.target.children.length < 2) {
-            ev.preventDefault();
-        }
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-    if (ev.target.children.length < 2) {
         ev.preventDefault();
     }
-    var data = ev.dataTransfer.getData("text");
-    var space = document.getElementById("space")
-    if (ev.target.children.length == 0) {
-        ev.target.appendChild(space.cloneNode(true));
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
     }
-    ev.target.appendChild(document.getElementById(data));
-}
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        var space = document.getElementById("space")
+        ev.target.appendChild(document.getElementById(data));
+    }
+
+    function pileDrop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.innerHTML = "";
+        ev.target.appendChild(document.getElementById(data));
+    }
 </script>
 
 <style>
 #stack1{
-    width:75px;
+    width:100px;
     height:150px;
     background-color:white;
     border : 2px solid black;
 }
-#card{
-    width:75px;
-    height:100px;
+#card,#deck,cardSpace{
+    width:100px;
+    height:125px;
     background-color:white;
     border : 2px solid black;
+    font-size:20px;
+    text-align:center;
+}
+
+#stack{
+    width:100px;
+    height:125px;
+    background-color:white;
+    border : 2px solid black;
+    font-size:20px;
+    text-align:center;
+}
+
+#pile{
+    width:100px;
+    height:125px;
+    border : 2px solid white;
+    color : white;
+    font-size:20px;
+    text-align:center;
+}
+.flexi{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
 }
 </style>
 
 <html>
 <body>
+    <div id="space" style="height:50px;"></div>
     <div id="board" style="width:100%;height:750px;background-color:green">
         <div id="space" style="height:50px;"></div>
-        <div id="stack1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div id="stack1" draggable="true" ondragstart="drag(event)"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-        <div id="card" draggable="true" ondragstart="drag(event)"></div>
-        <div id="deck">
+        <div id="flexRow" class="flexi">
+            <div id="deck">
+                Deck
+            </div>
+            <div id="empty" style="width:3%"></div>
+            <div id="pile"></div>
+            <div id="empty" style="width:47%"></div>
 
+            <div id="pile" ondrop="pileDrop(event)" ondragover="allowDrop(event)">
+                C
+            </div>
+            <div id="pile" ondrop="pileDrop(event)" ondragover="allowDrop(event)">
+                S
+            </div>
+            <div id="pile" ondrop="pileDrop(event)" ondragover="allowDrop(event)">
+                H
+            </div>
+            <div id="pile" ondrop="pileDrop(event)" ondragover="allowDrop(event)">
+                D
+            </div>
         </div>
-
-        <div id="piles">
-
-        </div>
-
-        <div id="stacks">
-            <div id="stack">
-
+        <br>
+        <br>
+        <br>
+        <div id="flexRow" class="flexi">
+            <div id="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+                1
             </div>
-            <div id="stack">
-
+            <div id="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+                2
             </div>
-            <div id="stack">
-
+            <div id="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+                3
             </div>
-            <div id="stack">
-
+            <div id="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+                4
             </div>
-            <div id="stack">
-
+            <div id="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+                5
             </div>
-            <div id="stack">
-
+            <div id="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+                6
             </div>
-            <div id="stack">
-
+            <div id="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+                7
             </div>
         </div>
     </div>
