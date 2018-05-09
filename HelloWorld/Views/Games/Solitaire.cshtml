@@ -17,10 +17,12 @@
     }
 
     function pileDrop(ev) {
-        ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
-        ev.target.innerHTML = "";
-        ev.target.appendChild(document.getElementById(data));
+        if (document.getElementById(data).children.length == 0) {
+            ev.preventDefault();
+            ev.target.innerHTML = "";
+            ev.target.appendChild(document.getElementById(data));
+        }
     }
 </script>
 
