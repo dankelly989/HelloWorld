@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace HelloWorld.Controllers
@@ -10,7 +11,14 @@ namespace HelloWorld.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            ViewData["Message"] = "Home page.";
+
+            return View("Index");
         }
+
+        /*public async Task<ActionResult> Index(string returnUrl)
+        {
+            return RedirectToAction("Solitaire", "Games");
+        }*/
     }
 }

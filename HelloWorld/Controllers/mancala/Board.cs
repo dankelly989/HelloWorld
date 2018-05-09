@@ -7,9 +7,7 @@ namespace HelloWorld.Controllers.mancala
 {
     public class Board
     {
-        private List<>
+        private List<Board> stuff;
 
     }
-
-    public class 
 }

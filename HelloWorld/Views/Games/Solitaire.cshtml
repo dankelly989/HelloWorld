@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+
+<script>
+    function allowDrop(ev) {
+        if (ev.target.children.length < 2) {
+            ev.preventDefault();
+        }
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    if (ev.target.children.length < 2) {
+        ev.preventDefault();
+    }
+    var data = ev.dataTransfer.getData("text");
+    var space = document.getElementById("space")
+    if (ev.target.children.length == 0) {
+        ev.target.appendChild(space.cloneNode(true));
+    }
+    ev.target.appendChild(document.getElementById(data));
+}
+</script>
+
+<style>
+#stack1{
+    width:75px;
+    height:150px;
+    background-color:white;
+    border : 2px solid black;
+}
+#card{
+    width:75px;
+    height:100px;
+    background-color:white;
+    border : 2px solid black;
+}
+</style>
+
+<html>
+<body>
+    <div id="board" style="width:100%;height:750px;background-color:green">
+        <div id="space" style="height:50px;"></div>
+        <div id="stack1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div id="stack1" draggable="true" ondragstart="drag(event)"ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div id="card" draggable="true" ondragstart="drag(event)"></div>
+        <div id="deck">
+
+        </div>
+
+        <div id="piles">
+
+        </div>
+
+        <div id="stacks">
+            <div id="stack">
+
+            </div>
+            <div id="stack">
+
+            </div>
+            <div id="stack">
+
+            </div>
+            <div id="stack">
+
+            </div>
+            <div id="stack">
+
+            </div>
+            <div id="stack">
+
+            </div>
+            <div id="stack">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

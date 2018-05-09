@@ -11,6 +11,11 @@ namespace HelloWorld.Controllers.solitaire
         private List<Stack> stack;
         private List<Pile> pile;
 
+        public static void main()
+        {
+
+        }
+
         public void newGame()
         {
             deck = new Deck();
