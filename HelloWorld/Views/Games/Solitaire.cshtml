@@ -26,14 +26,21 @@
     }
 
     function newCard() {
-        var newCard = $.get('/Games/Solitaire', function (card) {
+        var card = @Html.Raw(Json.Encode(Model.getCard()));
+        var newcard = document.getElementById("blankCard").cloneNode(true);
+        newcard.id=card.value;
+        newcard.classList.add(card.suit);
+        newcard.innerHTML= card.value.toString() + card.suit;
+        return newcard;
+
+        /*var newCard = $.get('/Games/GetCard', function (card) {
             var nc= document.getElementById("blankCard").cloneNode(true);
             nc.id=card.value;
             nc.classList.add(card.suit);
             nc.innerHTML= card.value.toString() + card.suit;
             return nc;
         });
-        return newCard;
+        return newCard;*/
     }
 
     function startGame() {
