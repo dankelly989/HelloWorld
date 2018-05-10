@@ -7,23 +7,14 @@ namespace HelloWorld.Models
 {
     public class CardModel
     {
-        public int ID { get; set; }
         public int value { get; set; }
-        public Suit suit { get; set; }
+        public String suit { get; set; }
 
-        public CardModel(int v, Suit s)
+        public CardModel(int v, string s)
         {
             value = v;
             suit = s;
         }
-    }
-
-    public enum Suit
-    {
-        Club = 0,
-        Heart = 1,
-        Spade = 2,
-        Diamond = 3
     }
 
     public class Deck
@@ -36,11 +27,12 @@ namespace HelloWorld.Models
             deck = new List<CardModel>();
             for (int i = 1; i < 14; i++)
             {
-                deck.Add(new CardModel(i, Suit.Club));
-                deck.Add(new CardModel(i, Suit.Spade));
-                deck.Add(new CardModel(i, Suit.Heart));
-                deck.Add(new CardModel(i, Suit.Diamond));
+                deck.Add(new CardModel(i, "C"));
+                deck.Add(new CardModel(i, "S"));
+                deck.Add(new CardModel(i, "H"));
+                deck.Add(new CardModel(i, "D"));
             }
+            shuffle();
         }
         private void shuffle()
         {

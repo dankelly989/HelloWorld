@@ -9,10 +9,19 @@ namespace HelloWorld.Controllers
 {
     public class GamesController:Controller
     {
+        Deck model = new Deck();
+
         public ActionResult Solitaire()
         {
-            var model = new Deck();
+            model = new Deck();
             return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult GetCard()
+        {
+            CardModel newCard = model.getCard();
+            return Json(new { value = newCard.value, suit = newCard.suit});
         }
     }
 }

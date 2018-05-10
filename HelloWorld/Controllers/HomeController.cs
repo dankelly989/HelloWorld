@@ -15,10 +15,5 @@ namespace HelloWorld.Controllers
 
             return View("Index");
         }
-
-        /*public async Task<ActionResult> Index(string returnUrl)
-        {
-            return RedirectToAction("Solitaire", "Games");
-        }*/
     }
 }
