@@ -25,31 +25,21 @@
         }
     }
 
-    function newCard() {
-        /*var card = Html.Raw(Json.Encode(Model.getCard()));
-        var newcard = document.getElementById("blankCard").cloneNode(true);
-        newcard.id=card.value;
-        newcard.classList.add(card.suit);
-        newcard.innerHTML= card.value.toString() + card.suit;
-        return newcard;*/
-
-        var newCard = $.get('/Games/GetCard', function (card) {
+    function newCard(item) {
+       $.getJSON('/Games/GetCard', function (card) {
             var nc= document.getElementById("blankCard").cloneNode(true);
             nc.id=card.value;
             nc.classList.add(card.suit);
-            console.log(card.value);
-            console.log(card.suit);
-            nc.innerHTML= card.value.toString() + card.suit;
-            return nc;
-        });
-        return newCard;
+            nc.innerHTML = card.value.toString() + card.suit;
+            getlastCard(document.getElementById(item)).appendChild(nc);
+       });
     }
 
     function startGame() {
         for (i = 0; i < 7; i++) {
             for (j = 1; j < 8 - i; j++) {
                 var id = "stack" + j;
-                getlastCard(document.getElementById(id)).appendChild(newCard());
+                    newCard(id);
             }
         }
     }
@@ -66,7 +56,7 @@
 
     function deckClick() {
         getlastCard(document.getElementById("pile")).innerHTML="";
-        getlastCard(document.getElementById("pile")).appendChild(newCard());
+        newCard("pile");
     }
 </script>
 
@@ -125,6 +115,7 @@
             <div id="deck" onclick="deckClick()">
                 Deck
             </div>
+
             <div id="empty" style="width:3%"></div>
             <div id="pile"></div>
             <div id="empty" style="width:47%"></div>

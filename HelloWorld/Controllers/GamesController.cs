@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace HelloWorld.Controllers
 {
@@ -18,10 +19,10 @@ namespace HelloWorld.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetCard()
+        public string GetCard()
         {
             CardModel newCard = model.getCard();
-            return Json(new { value = newCard.value, suit = newCard.suit});
+            return new JavaScriptSerializer().Serialize(newCard);
         }
     }
 }

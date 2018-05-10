@@ -28,9 +28,13 @@ namespace HelloWorld.Models
             for (int i = 1; i < 14; i++)
             {
                 deck.Add(new CardModel(i, "C"));
+                System.Diagnostics.Debug.WriteLine(i+"C");
                 deck.Add(new CardModel(i, "S"));
+                System.Diagnostics.Debug.WriteLine(i + "S");
                 deck.Add(new CardModel(i, "H"));
+                System.Diagnostics.Debug.WriteLine(i + "H");
                 deck.Add(new CardModel(i, "D"));
+                System.Diagnostics.Debug.WriteLine(i + "D");
             }
             shuffle();
         }
