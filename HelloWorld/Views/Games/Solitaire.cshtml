@@ -7,21 +7,40 @@
     }
 
     function drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.children[0].id);
+        ev.dataTransfer.setData("name", ev.target.children[0].getAttribute("name"));
     }
 
     function drop(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
+        var name = ev.dataTransfer.getData("name");
+        var moveCard = document.getElementsByName(name)[0];
+        var card = getlastCard(ev.target);
+
+        console.log(parseInt(card.id) == parseInt(moveCard.id) + 1);
+
+        if (parseInt(card.id) == parseInt(moveCard.id) + 1 && oppositeColor(card, moveCard)) {
+            ev.preventDefault();
+            card.appendChild(moveCard);
+        }
+    }
+
+    function oppositeColor(card,moveCard) {
+        if ((card.classList[0] == "D" || card.classList[0] == "H") && (moveCard.classList[0] == "C" || moveCard.classList[0] == "S")) {
+            return true;
+        }
+        else if ((moveCard.classList[0] == "D" || moveCard.classList[0] == "H") && (card.classList[0] == "C" || card.classList[0] == "S")) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     function pileDrop(ev) {
-        var data = ev.dataTransfer.getData("text");
-        if (document.getElementById(data).children.length == 0) {
+        var name = ev.dataTransfer.getData("name");
+        if (document.getElementsByName(name)[0].children.length == 0) {
             ev.preventDefault();
             ev.target.innerHTML = "";
-            ev.target.appendChild(document.getElementById(data));
+            getLastcard(ev.target).appendChild(document.getElementsByName(name)[0]);
         }
     }
 
@@ -30,6 +49,7 @@
             var nc= document.getElementById("blankCard").cloneNode(true);
             nc.id=card.value;
             nc.classList.add(card.suit);
+            nc.setAttribute("name", card.value.toString() + card.suit);
             nc.innerHTML = card.value.toString() + card.suit;
             getlastCard(document.getElementById(item)).appendChild(nc);
        });
@@ -42,8 +62,6 @@
                     newCard(id);
             }
         }
-
-        console.log(@Model);
     }
 
     function getlastCard(card){
