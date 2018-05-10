@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+@model HelloWorld.Models.Deck
 
 <script>
     function allowDrop(ev) {
@@ -12,7 +13,6 @@
     function drop(ev) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
-        var space = document.getElementById("space")
         ev.target.appendChild(document.getElementById(data));
     }
 
@@ -23,6 +23,30 @@
             ev.target.innerHTML = "";
             ev.target.appendChild(document.getElementById(data));
         }
+    }
+
+    function newCard() {
+        var card = @Html.Raw(Json.Encode(Model.getCard()));
+        console.log(card.value);
+        var newcard = document.getElementById("blankCard").cloneNode(true);
+        newcard.id=card.value;
+        newcard.class = card.Suit;
+        newcard.innerHTML=card.value;
+        newcard.style.display="inline";
+        return newcard;
+    }
+
+    function startGame() {
+        for (i = 0; i < 7; i++) {
+            for (j = 1; j < 8 - i; j++) {
+                var id = "stack" + j;
+                document.getElementById(id).appendChild(newCard());
+            }
+        }
+    }
+
+    function deckClick() {
+        document.getElementById("pile").appendChild(newCard());
     }
 </script>
 
@@ -58,15 +82,26 @@
     flex-direction:row;
     justify-content: space-around;
 }
+
+#blankCard{
+    width:100px;
+    height:125px;
+    background-color:white;
+    border : 2px solid black;
+    font-size:20px;
+    text-align:center;
+    display:none;
+}
 </style>
 
 <html>
-<body>
+<body onload="startGame()">
     <div id="space" style="height:50px;"></div>
+    <div id="blankCard"></div>
     <div id="board" style="width:100%;height:750px;background-color:green">
         <div id="space" style="height:50px;"></div>
         <div id="flexRow" class="flexi">
-            <div id="deck">
+            <div id="deck" onclick="deckClick()">
                 Deck
             </div>
             <div id="empty" style="width:3%"></div>
@@ -90,25 +125,25 @@
         <br>
         <br>
         <div id="flexRow" class="flexi">
-            <div id="stack1" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div id="stack7" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
                 1
             </div>
-            <div id="stack2" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div id="stack6" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
                 2
             </div>
-            <div id="stack3" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div id="stack5" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
                 3
             </div>
             <div id="stack4" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
                 4
             </div>
-            <div id="stack5" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div id="stack3" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
                 5
             </div>
-            <div id="stack6" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div id="stack2" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
                 6
             </div>
-            <div id="stack7" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div id="stack1" class="stack" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)">
                 7
             </div>
         </div>

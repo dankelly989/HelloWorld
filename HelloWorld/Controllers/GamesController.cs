@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelloWorld.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,8 @@ namespace HelloWorld.Controllers
     {
         public ActionResult Solitaire()
         {
-            return View("Solitaire");
+            var model = new Deck();
+            return View(model);
         }
     }
 }
