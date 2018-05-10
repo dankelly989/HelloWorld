@@ -26,7 +26,7 @@
     }
 
     function newCard(item) {
-       $.getJSON('/Games/GetCard', function (card) {
+        $.getJSON('/Games/GetCard/', function (card) {
             var nc= document.getElementById("blankCard").cloneNode(true);
             nc.id=card.value;
             nc.classList.add(card.suit);
@@ -42,6 +42,8 @@
                     newCard(id);
             }
         }
+
+        console.log(@Model);
     }
 
     function getlastCard(card){
