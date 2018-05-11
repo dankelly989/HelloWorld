@@ -7,7 +7,7 @@
     }
 
     function drag(ev) {
-        ev.dataTransfer.setData("name", ev.target.children[0].getAttribute("name"));
+        ev.dataTransfer.setData("name", ev.target.getAttribute("name"));
     }
 
     function drop(ev) {
@@ -15,12 +15,17 @@
         var moveCard = document.getElementsByName(name)[0];
         var card = getlastCard(ev.target);
 
-        console.log(parseInt(card.id) == parseInt(moveCard.id) + 1);
-
-        if (parseInt(card.id) == parseInt(moveCard.id) + 1 && oppositeColor(card, moveCard)) {
+        if ((parseInt(card.id) == parseInt(moveCard.id) + 1 && oppositeColor(card, moveCard)) || isBlank(card,moveCard)) {
             ev.preventDefault();
             card.appendChild(moveCard);
         }
+    }
+
+    function isBlank(card,moveCard) {
+        if(card.classList[0]=="stack" && moveCard.id=="13"){
+            return true
+        }
+        return false;
     }
 
     function oppositeColor(card,moveCard) {
@@ -30,6 +35,9 @@
         else if ((moveCard.classList[0] == "D" || moveCard.classList[0] == "H") && (card.classList[0] == "C" || card.classList[0] == "S")) {
             return true;
         }
+        else if (card.classList[0] == "stack1" || card.classList[0] == "stack2" || card.classList[0] == "stack3" || card.classList[0] == "stack4" || card.classList[0] == "stack5" || card.classList[0] == "stack6" || card.classList[0] == "stack7") {
+            return true;
+        }
         else {
             return false;
         }
@@ -37,11 +45,20 @@
 
     function pileDrop(ev) {
         var name = ev.dataTransfer.getData("name");
-        if (document.getElementsByName(name)[0].children.length == 0) {
+        var card = getlastCard(ev.target);
+        var moveCard = document.getElementsByName(name)[0]
+        if (document.getElementsByName(name)[0].children.length == 0 && validCard(card,moveCard)) {
             ev.preventDefault();
             ev.target.innerHTML = "";
-            getLastcard(ev.target).appendChild(document.getElementsByName(name)[0]);
+            card.appendChild(moveCard);
         }
+    }
+
+    function validCard(card,moveCard) {
+        if (card.classList[0] == moveCard.classList[0] && parseInt(card.id) == parseInt(moveCard.id) - 1) {
+            return true;
+        }
+        return false;
     }
 
     function newCard(item) {
@@ -128,7 +145,7 @@
 <html>
 <body onload="startGame()">
     <div id="space" style="height:50px;"></div>
-    <div id="blankCard"></div>
+    <div id="blankCard" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
     <div id="board" style="width:100%;height:750px;background-color:green">
         <div id="space" style="height:50px;"></div>
         <div id="flexRow" class="flexi">
@@ -140,22 +157,22 @@
             <div id="pile"></div>
             <div id="empty" style="width:47%"></div>
 
-            <div id="pile" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
-            <div id="pile" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
-            <div id="pile" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
-            <div id="pile" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
+            <div id="0" class="C" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
+            <div id="0" class="S" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
+            <div id="0" class="H" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
+            <div id="0" class="D" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
         </div>
         <br>
         <br>
         <br>
         <div id="flexRow" class="flexi">
-            <div id="stack7" style="width:100px" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            <div id="stack6" style="width:100px" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            <div id="stack5" style="width:100px" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            <div id="stack4" style="width:100px" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            <div id="stack3" style="width:100px" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            <div id="stack2" style="width:100px" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-            <div id="stack1" style="width:100px" draggable="true" ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+            <div id="stack7" class="stack" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:125px;height:500px"></div>
+            <div id="stack6" class="stack" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:125px;height:500px"></div>
+            <div id="stack5" class="stack" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:125px;height:500px"></div>
+            <div id="stack4" class="stack" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:125px;height:500px"></div>
+            <div id="stack3" class="stack" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:125px;height:500px"></div>
+            <div id="stack2" class="stack" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:125px;height:500px"></div>
+            <div id="stack1" class="stack" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:125px;height:500px"></div>
         </div>
     </div>
 </body>
