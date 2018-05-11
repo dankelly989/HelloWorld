@@ -10,7 +10,7 @@ namespace HelloWorld.Controllers
 {
     public class GamesController:Controller
     {
-        Deck model = new Deck();
+        Deck model { get; set; } = new Deck();
 
         public ActionResult Solitaire()
         {
