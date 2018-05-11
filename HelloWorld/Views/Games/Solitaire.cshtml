@@ -50,6 +50,7 @@
         if (document.getElementsByName(name)[0].children.length == 0 && validCard(card,moveCard)) {
             ev.preventDefault();
             ev.target.innerHTML = "";
+            ev.target.style.border = "0px";
             card.appendChild(moveCard);
         }
     }
@@ -61,13 +62,29 @@
         return false;
     }
 
+    function valueToString(val) {
+        var number = parseInt(val);
+        if(number==1){
+            return "A"
+        }else if(number==11){
+            return "J"
+        } else if (number==12) {
+            return "Q"
+        } else if (number==13) {
+            return "K"
+        }
+        return val;
+    }
+
     function newCard(item) {
         $.getJSON('/Games/GetCard/', function (card) {
-            var nc= document.getElementById("blankCard").cloneNode(true);
+            var nc = document.getElementById("blankCard").cloneNode(true);
+            console.log(card.value);
+            console.log(card.suit);
             nc.id=card.value;
             nc.classList.add(card.suit);
             nc.setAttribute("name", card.value.toString() + card.suit);
-            nc.innerHTML = card.value.toString() + card.suit;
+            nc.innerHTML = valueToString(card.value) + " " + card.suit;
             getlastCard(document.getElementById(item)).appendChild(nc);
        });
     }
@@ -101,7 +118,7 @@
         var children = card.children;
         if (children.length == 0) {
             return true;
-        } else if (children[0].id == parseInt(card.id) - 1) {
+        } else if (children[0].id == parseInt(card.id) - 1 && oppositeColor(children[0],card)) {
             return canMove(children[0]);
         }
         return false;
@@ -177,10 +194,10 @@
             <div id="pile"></div>
             <div id="empty" style="width:47%"></div>
 
-            <div id="0" class="C" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
-            <div id="0" class="S" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
-            <div id="0" class="H" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
-            <div id="0" class="D" ondrop="pileDrop(event)" ondragover="allowDrop(event)"></div>
+            <div id="0" class="C" ondrop="pileDrop(event)" ondragover="allowDrop(event)">C</div>
+            <div id="0" class="H" ondrop="pileDrop(event)" ondragover="allowDrop(event)">H</div>
+            <div id="0" class="S" ondrop="pileDrop(event)" ondragover="allowDrop(event)">S</div>
+            <div id="0" class="D" ondrop="pileDrop(event)" ondragover="allowDrop(event)">D</div>
         </div>
         <br>
         <br>

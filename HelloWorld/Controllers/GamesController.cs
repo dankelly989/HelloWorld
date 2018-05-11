@@ -19,9 +19,9 @@ namespace HelloWorld.Controllers
         }
 
         [HttpGet]
-        public string GetCard(Deck currentModel)
+        public string GetCard()
         {
-            CardModel newCard = currentModel.getCard();
+            CardModel newCard = model.getCard();
             return new JavaScriptSerializer().Serialize(newCard);
         }
     }
