@@ -9,11 +9,13 @@ namespace HelloWorld.Models
     {
         public int value { get; set; }
         public String suit { get; set; }
+        public bool hidden { get; set; }
 
-        public CardModel(int v, string s)
+        public CardModel(int v, string s, bool h)
         {
             value = v;
             suit = s;
+            hidden = h;
         }
     }
 
@@ -27,13 +29,13 @@ namespace HelloWorld.Models
             deck = new List<CardModel>();
             for (int i = 1; i < 14; i++)
             {
-                deck.Add(new CardModel(i, "C"));
+                deck.Add(new CardModel(i, "C",true));
                 //System.Diagnostics.Debug.WriteLine(i+"C");
-                deck.Add(new CardModel(i, "S"));
+                deck.Add(new CardModel(i, "S",true));
                 //System.Diagnostics.Debug.WriteLine(i + "S");
-                deck.Add(new CardModel(i, "H"));
+                deck.Add(new CardModel(i, "H",true));
                 //System.Diagnostics.Debug.WriteLine(i + "H");
-                deck.Add(new CardModel(i, "D"));
+                deck.Add(new CardModel(i, "D",true));
                 //System.Diagnostics.Debug.WriteLine(i + "D");
             }
             shuffle();

@@ -14,9 +14,15 @@
         var name = ev.dataTransfer.getData("name");
         var moveCard = document.getElementsByName(name)[0];
         var card = getlastCard(ev.target);
+        var parent = moveCard.parentElement;
 
         if ((parseInt(card.id) == parseInt(moveCard.id) + 1 && oppositeColor(card, moveCard)) || isBlank(card,moveCard)) {
             ev.preventDefault();
+            parent.classList.remove("Hidden");
+            if (parent.classList[0] != "stack") {
+                parent.innerHTML = valueToString(parent.id) + " " + parent.classList[0];
+                parent.style.border = "1px solid black";
+            }
             card.appendChild(moveCard);
         }
     }
@@ -47,8 +53,17 @@
         var name = ev.dataTransfer.getData("name");
         var card = getlastCard(ev.target);
         var moveCard = document.getElementsByName(name)[0]
+        var parent = moveCard.parentElement;
+
         if (document.getElementsByName(name)[0].children.length == 0 && validCard(card,moveCard)) {
             ev.preventDefault();
+
+            parent.classList.remove("Hidden");
+            if (parent.classList[0] != "stack") {
+                parent.innerHTML = valueToString(parent.id) + " " + parent.classList[0];
+                parent.style.border = "1px solid black";
+            }
+
             ev.target.innerHTML = "";
             ev.target.style.border = "0px";
             card.appendChild(moveCard);
@@ -76,13 +91,16 @@
         return val;
     }
 
-    function newCard(item) {
+    function newCard(item,start) {
         $.getJSON('/Games/GetCard/', function (card) {
             var nc = document.getElementById("blankCard").cloneNode(true);
             console.log(card.value);
             console.log(card.suit);
             nc.id=card.value;
             nc.classList.add(card.suit);
+            if(start){
+                nc.classList.add("Hidden");
+            }
             nc.setAttribute("name", card.value.toString() + card.suit);
             nc.innerHTML = valueToString(card.value) + " " + card.suit;
             getlastCard(document.getElementById(item)).appendChild(nc);
@@ -93,7 +111,11 @@
         for (i = 0; i < 7; i++) {
             for (j = 1; j < 8 - i; j++) {
                 var id = "stack" + j;
-                    newCard(id);
+                if(j==7-i){
+                    newCard(id,false)
+                } else {
+                    newCard(id, true);
+                }
             }
         }
     }
@@ -110,8 +132,10 @@
 
     function deckClick() {
         getlastCard(document.getElementById("pile")).innerHTML = "";
-        getlastCard(document.getElementById("pile")).style.border = "0px";
-        newCard("pile");
+        var card = getlastCard(document.getElementById("pile"));
+        card.style.border = "0px";
+        card.classList.add("Hidden");
+        newCard("pile",false);
     }
 
     function canMove(card) {
@@ -176,6 +200,15 @@
     font-size:20px;
     color : red;
     text-align:center;
+}
+
+.Hidden{
+    width:100px;
+    height:125px;
+    background-color:blue;
+    border : 1px solid black;
+    font-size: 20px;
+    color:blue;
 }
 </style>
 
